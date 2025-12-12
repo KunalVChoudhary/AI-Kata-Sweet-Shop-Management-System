@@ -39,3 +39,39 @@ const handleUserRegister=async(req,res,next)=>{
         }
     }
 }
+
+
+//handles users login
+const handleUserLogin=async(req,res,next)=>{
+    try{
+        const {email,password}=req.body
+        const user = await User.findOne({email});
+
+        if (!user){
+            return res.status(400).json({message:" User doesn't exist. Try Again"})
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch){
+            return res.status(400).json({message:" Wrong Password Try Again"})
+        }
+
+        // Create Token
+        const jwtToken = setJWT(user)
+        res.cookie('token', jwtToken, {
+            httpOnly: true,      
+            secure: true,        
+            sameSite: 'None', 
+            maxAge: 3600000*24      
+        });
+
+        return res.status(200).json({
+            message:"Login Successfull",
+            id:user._id, 
+            role:user.role, 
+            username:user.username})
+        
+    }
+    catch(err){
+        return res.status(400).json({ message: "Could not signin, try again" });
+    }
+}
