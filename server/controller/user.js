@@ -75,3 +75,22 @@ const handleUserLogin=async(req,res,next)=>{
         return res.status(400).json({ message: "Could not signin, try again" });
     }
 }
+
+
+//handles user logout
+const handleUserLogout = (req, res) => {
+    try{
+        res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,       
+        sameSite: 'None'  
+    });
+    res.status(200).json({ message: "Logout successful" });
+    }
+    catch(err){
+        return res.status(400).json({ message: "Could not signin, try again" });
+    }
+};
+
+
+module.exports={handleUserRegister,handleUserLogin,handleUserLogout}
