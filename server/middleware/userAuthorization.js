@@ -1,4 +1,4 @@
-const { checkJWT } = require("../service/auth")
+const { checkJWT } = require("../services/jwtHelper")
 
 //middleware to check if client is logged in, used in protected routes
 const userAuthorization=(req,res,next)=>{

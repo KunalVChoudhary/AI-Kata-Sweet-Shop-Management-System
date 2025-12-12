@@ -1,6 +1,6 @@
 const User=require('../models/user')
 const bcrypt =require('bcrypt');
-const { setJWT } = require('../service/auth');
+const { setJWT } = require('../services/jwtHelper');
 
 
 //handles users registeration
@@ -30,7 +30,6 @@ const handleUserRegister=async(req,res,next)=>{
             username:user.username})
     }
     catch(err){
-
         //Check for if user with the same mail already exists
         if (err.code === 11000 && err.keyPattern && err.keyPattern.email){
             return res.status(400).json({ message: "Email already exists" })

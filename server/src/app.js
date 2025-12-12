@@ -4,6 +4,9 @@ const cookieParser=require('cookie-parser')
 const cors = require('cors');
 const { connectDb } = require('../services/databaseConnection');
 
+//Routes
+const userRoute = require('../routes/user');
+
 //initializing express app/server
 const app = express();
 
@@ -12,13 +15,15 @@ connectDb()
 
 //middlewares
 app.use(express.json());
-app.use(cookieParser(`${process.env.COOKIE_PARSER_SECRET_KEY}`));
+app.use(cookieParser());
+app.use(cors())
+// //cors 
+// app.use(cors({
+//   origin: [`${process.env.CLIENT_URL}`],
+//   credentials: true,
+// }));
 
-//cors 
-app.use(cors({
-  origin: [`${process.env.CLIENT_URL}`],
-  credentials: true,
-}));
+app.use('/',userRoute)
 
 
 module.exports = app;

@@ -1,13 +1,13 @@
 const request = require('supertest');
 const app = require('../src/app');
 const setup = require('./dbSetup');
-const User = require('../models/User');
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 
 beforeAll(async () => await setup.setup());
-afterAll(async () => await setup.teardown());
-beforeEach(async () => await setup.clear());
+afterAll(async () => await setup.deleteDB());
+beforeEach(async () => await setup.clearCollection());
 
 
 //signup/register route tests
@@ -15,7 +15,7 @@ describe('POST /api/auth/register', ()=>{
     //tests for post request on route /api/auth/register to create a user
     test('POST /api/auth/register creates a user and returns 200', async () => {
     const res = await request(app).post('/api/auth/register').send({
-        name: 'Kunal',
+        username: 'Kunal',
         email: 'test@example.com',
         password: 'Pass123'
     });
@@ -28,7 +28,7 @@ describe('POST /api/auth/register', ()=>{
 
     test('POST /api/auth/register reject a users  request and returns 400', async () => {
     const res = await request(app).post('/api/auth/register').send({
-        name: 'Kunal',
+        username: 'Kunal',
         password: 'Pass123'
     });
     expect(res.status).toBe(400);
@@ -36,7 +36,7 @@ describe('POST /api/auth/register', ()=>{
 
     test('POST /api/auth/register creates a admin and returns 200', async () => {
     const res = await request(app).post('/api/auth/register').send({
-        name: 'Kunal',
+        username: 'Kunal',
         email: 'test@admin.com',
         password: 'Pass123'
     });
