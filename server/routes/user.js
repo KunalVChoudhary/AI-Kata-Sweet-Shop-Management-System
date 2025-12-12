@@ -1,5 +1,5 @@
 const {Router}=require('express');
-const {handleUserRegister, handleUserLogin, handleUserLogout, checker}=require('../controllers/user');
+const {handleUserRegister, handleUserLogin, handleUserLogout}=require('../controllers/user');
 const { userAuthorization } = require('../middleware/userAuthorization');
 
 const route=Router()

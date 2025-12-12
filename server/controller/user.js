@@ -88,7 +88,7 @@ const handleUserLogout = (req, res) => {
     res.status(200).json({ message: "Logout successful" });
     }
     catch(err){
-        return res.status(400).json({ message: "Could not signin, try again" });
+        return res.status(400).json({ message: "Could not signout, try again" });
     }
 };
 
