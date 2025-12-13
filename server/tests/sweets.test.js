@@ -227,3 +227,91 @@ describe('PUT /api/sweets/:id for updating sweet details', () => {
   });
 
 });
+
+
+//test for  DELETE /api/sweets/:id: Delete a sweet (Admin only)
+describe('DELETE /api/sweets/:id for deleting a sweet', () => {
+
+  beforeEach(async () => {
+    await dbSetup.clearCollection();
+  });
+
+  test('admin can delete a sweet and gets status 200', async () => {
+    
+    // create admin
+    const hash = await bcrypt.hash('Pass123', 10);
+    await User.create({
+      username: 'Kunal',
+      email: 'test@admin.com',
+      password: hash,
+      role: 'ADMIN'
+    });
+
+    // login admin
+    const loginRes = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: 'test@admin.com',
+        password: 'Pass123'
+      });
+
+    const cookie = loginRes.headers['set-cookie'];
+
+    // create sweet
+    const sweet = await Sweet.create({
+      name: 'Jalebi',
+      price: 10,
+      quantity: 40,
+      category: 'Indian'
+    });
+
+    // delete sweet
+    const res = await request(app)
+      .delete(`/api/sweets/${sweet._id}`)
+      .set('Cookie', cookie);
+
+    expect(res.statusCode).toBe(200);
+
+    // on searching the sweet by id in db it must return null
+    const deleted = await Sweet.findById(sweet._id);
+    expect(deleted).toBeNull();
+  });
+
+  test('normal user cannot delete a sweet and gets status 400', async () => {
+    
+    // create normal user
+    const hash = await bcrypt.hash('Pass123', 10);
+    await User.create({
+      username: 'User',
+      email: 'user@test.com',
+      password: hash,
+      role: 'USER'
+    });
+
+    // login user
+    const loginRes = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: 'user@test.com',
+        password: 'Pass123'
+      });
+
+    const cookie = loginRes.headers['set-cookie'];
+
+    // create sweet
+    const sweet = await Sweet.create({
+      name: 'Barfi',
+      price: 15,
+      quantity: 20,
+      category: 'Indian'
+    });
+
+    // try deleting sweet
+    const res = await request(app)
+      .delete(`/api/sweets/${sweet._id}`)
+      .set('Cookie', cookie);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+});
