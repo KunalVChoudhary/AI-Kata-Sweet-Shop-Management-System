@@ -1,5 +1,5 @@
 const {Router}=require('express');
-const {handleUserRegister, handleUserLogin, handleUserLogout}=require('../controller/user');
+const {handleUserRegister, handleUserLogin, handleUserLogout, checker}=require('../controller/user');
 const { userAuthorization } = require('../middleware/userAuthorization');
 
 const route=Router()
@@ -12,6 +12,9 @@ route.post('/api/auth/login',handleUserLogin)
 
 //route for logging user out
 route.get('/api/auth/logout',userAuthorization,handleUserLogout)
+
+//route to check user auth and get username and role
+route.get('/api/auth/check', userAuthorization, checker)
 
 
 module.exports=route
