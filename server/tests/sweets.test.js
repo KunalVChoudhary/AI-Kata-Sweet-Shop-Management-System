@@ -8,10 +8,12 @@ const Sweet = require('../models/sweet')
 
 beforeAll(async () => await dbSetup.setup());
 afterAll(async () => await dbSetup.deleteDB());
-beforeEach(async () => await dbSetup.clearCollection());
+
 
 //test for route POST /api/sweets for Adding a new sweet
-describe('POST /api/sweets', ()=>{
+describe('POST /api/sweets for Adding a new sweet', ()=>{
+
+    beforeEach(async () => await dbSetup.clearCollection());
 
     test('create a new sweet in db on request of admin and return status 200',async()=>{
 
@@ -71,4 +73,20 @@ describe('POST /api/sweets', ()=>{
         expect(createSweetRes.statusCode).toBe(400)
 
     })
+})
+
+
+// test for route GET /api/sweets: View a list of all available sweets
+describe('GET /api/sweets for Viewing a list of all available sweets',()=>{
+
+    test('send a list/array of sweets to the user on request and return statuscode 200', async()=>{
+
+        const getSweetsListRes = await request(app)
+        .get("/api/sweets");
+
+        expect(getSweetsListRes.statusCode).toBe(200)
+        expect(Array.isArray(getSweetsListRes.body)).toBe(true);
+
+    })
+
 })
