@@ -90,3 +90,49 @@ describe('GET /api/sweets for Viewing a list of all available sweets',()=>{
     })
 
 })
+
+
+//test for GET /api/sweets/search: Search for sweets by name, category, or price range
+describe('GET /api/sweets/search', () => {
+
+  test('search sweets by name and return status 200', async () => {
+    const res = await request(app)
+      .get('/api/sweets/search')
+      .query({ name: 'ras' });
+
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  test('search sweets by category and return status 200', async () => {
+    const res = await request(app)
+      .get('/api/sweets/search')
+      .query({ category: 'Indian' });
+
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  test('search sweets by price range and return status 200', async () => {
+    const res = await request(app)
+      .get('/api/sweets/search')
+      .query({ minPrice: 10, maxPrice: 20 });
+
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  test('search sweets with multiple filters and return status 200', async () => {
+    const res = await request(app)
+      .get('/api/sweets/search')
+      .query({
+        name: 'la',
+        category: 'Indian',
+        maxPrice: 15
+      });
+
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+});
