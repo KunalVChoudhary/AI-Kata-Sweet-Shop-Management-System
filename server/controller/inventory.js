@@ -25,10 +25,12 @@ const purchaseSweet = async (req, res) => {
         return res.status(400).json({ message: 'Sweet not found' });
         }
 
+        //verifying if quanity is not zero 
         if (sweet.quantity <= 0) {
         return res.status(400).json({ message: 'Sweet out of stock' });
         }
 
+        //saaving the updated values
         sweet.quantity = sweet.quantity - 1;
         await sweet.save();
 
