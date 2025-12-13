@@ -1,5 +1,5 @@
-// src/db.js
 const mongoose = require('mongoose');
+const { seedSweets } = require('./sweetSeeder/sweetSeeder');
 require('dotenv').config();
 
 //helper function to get uri of db based on node env 
@@ -18,10 +18,8 @@ async function connectDb() {
   }
 
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(uri);
+    await seedSweets()
     console.log('Connected to MongoDB:', uri);
   } catch (err) {
     console.error('DB Connection Error:', err);
