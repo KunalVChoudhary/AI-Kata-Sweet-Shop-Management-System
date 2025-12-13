@@ -6,6 +6,7 @@ const { connectDb } = require('../services/databaseConnection');
 
 //Routes
 const userRoute = require('../routes/user');
+const sweetRoute = require('../routes/sweet')
 
 //initializing express app/server
 const app = express();
@@ -23,7 +24,7 @@ app.use(cors())
 //   credentials: true,
 // }));
 
-app.use('/',userRoute)
+app.use('/',userRoute,sweetRoute)
 
 
 module.exports = app;
