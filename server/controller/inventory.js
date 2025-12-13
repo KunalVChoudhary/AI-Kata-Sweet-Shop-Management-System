@@ -45,6 +45,30 @@ const purchaseSweet = async (req, res) => {
     }
 };
 
-module.exports = {
-  purchaseSweet
+
+
+// controller function fot  POST /api/sweets/:id/restock to  Restock a sweet, increasing its quantity (Admin only)
+const restockSweet = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { change } = req.body;
+
+    const sweet = await Sweet.findById(id);
+    if (!sweet) {
+      return res.status(400).json({ message: 'Sweet not found' });
+    }
+
+    // increase quantity
+    sweet.quantity = sweet.quantity + change;
+    await sweet.save();
+
+    return res.status(200).json({
+      id: sweet._id,
+      quantity: sweet.quantity
+    });
+  } catch (err) {
+    return res.status(400).json({ message: 'Could not restock sweet' });
+  }
 };
+
+module.exports = { purchaseSweet, restockSweet};
