@@ -77,4 +77,37 @@ const searchSweets = async (req, res) => {
 };
 
 
-module.exports = { createSweet, getAllSweets, searchSweets};
+//controller function for PUT /api/sweets/:id to Update a sweet's details.
+const updateSweet = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+    const { name, price, quantity, category } = req.body;
+
+    // basic update object
+    const updateData = {};
+    if (name !== undefined) updateData.name = name;
+    if (price !== undefined) updateData.price = price;
+    if (quantity !== undefined) updateData.quantity = quantity;
+    if (category !== undefined) updateData.category = category;
+
+    const updatedSweet = await Sweet.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedSweet) {
+      return res.status(400).json({ message: 'Sweet not found' });
+    }
+
+    return res.status(200).json(updatedSweet);
+  } catch (err) {
+    return res.status(400).json({ message: 'Could not update sweet' });
+  }
+};
+
+
+
+
+module.exports = { createSweet, getAllSweets, searchSweets, updateSweet};
