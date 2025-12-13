@@ -136,3 +136,94 @@ describe('GET /api/sweets/search', () => {
   });
 
 });
+
+
+//test for PUT /api/sweets/:id: Update a sweet's details
+describe('PUT /api/sweets/:id for updating sweet details', () => {
+
+  beforeEach(async () => {
+    await dbSetup.clearCollection();
+  });
+
+  test('admin can update sweet details and gets status 200', async () => {
+    // create admin
+    const hash = await bcrypt.hash('Pass123', 10);
+    await User.create({
+      username: 'Admin',
+      email: 'admin@test.com',
+      password: hash,
+      role: 'ADMIN'
+    });
+
+    // login admin
+    const loginRes = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: 'admin@test.com',
+        password: 'Pass123'
+      });
+
+    const cookie = loginRes.headers['set-cookie'];
+
+    // create a sweet directly in DB
+    const sweet = await Sweet.create({
+      name: 'Ladoo',
+      price: 5,
+      quantity: 20,
+      category: 'Indian'
+    });
+
+    // update sweet
+    const res = await request(app)
+      .put(`/api/sweets/${sweet._id}`)
+      .set('Cookie', cookie)
+      .send({
+        price: 10,
+        quantity: 30
+      });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.price).toBe(10);
+    expect(res.body.quantity).toBe(30);
+  });
+
+  test('normal user cannot update sweet and gets status 400', async () => {
+    // create normal user
+    const hash = await bcrypt.hash('Pass123', 10);
+    await User.create({
+      username: 'KUnal',
+      email: 'email@example.com',
+      password: hash,
+      role: 'USER'
+    });
+
+    // login user
+    const loginRes = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: 'email@example.com',
+        password: 'Pass123'
+      });
+
+    const cookie = loginRes.headers['set-cookie'];
+
+    // create sweet
+    const sweet = await Sweet.create({
+      name: 'Barfi',
+      price: 15,
+      quantity: 25,
+      category: 'Indian'
+    });
+
+    // try updating sweet
+    const res = await request(app)
+      .put(`/api/sweets/${sweet._id}`)
+      .set('Cookie', cookie)
+      .send({
+        price: 20
+      });
+
+    expect(res.statusCode).toBe(400);
+  });
+
+});
