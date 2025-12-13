@@ -3,11 +3,6 @@ const Sweet = require('../models/sweet');
 // POST /api/sweets to Add a new sweet
 const createSweet = async (req, res) => {
   try {
-    
-    // role check
-    if (!req.user || req.user.role !== 'ADMIN') {
-      return res.status(400).json({ message: 'Only admin can add sweets' });
-    }
 
     const { name, price, quantity, category } = req.body;
 
@@ -32,6 +27,7 @@ const createSweet = async (req, res) => {
     });
 
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ message: 'Could not create sweet' });
   }
 };
