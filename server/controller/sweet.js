@@ -32,4 +32,15 @@ const createSweet = async (req, res) => {
   }
 };
 
-module.exports = { createSweet };
+
+// GET /api/sweets View a list of all available sweets
+const getAllSweets = async (req, res) => {
+  try {
+    const sweets = await Sweet.find();
+    return res.status(200).json(sweets);
+  } catch (err) {
+    return res.status(400).json({ message: 'Could not fetch sweets' });
+  }
+};
+
+module.exports = { createSweet, getAllSweets};
