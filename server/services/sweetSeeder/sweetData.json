@@ -1,0 +1,12 @@
+[
+    { "name": "Rasgulla","category": "Indian", "price": 10, "quantity": 50 },
+    { "name": "Gulab Jamun","category": "Indian", "price": 12, "quantity": 40 },
+    { "name": "Ladoo","category": "Indian", "price": 8, "quantity": 60 },
+    { "name": "Barfi","category": "Indian", "price": 15, "quantity": 30 },
+    { "name": "Jalebi","category": "Indian", "price": 7, "quantity": 70 },
+    { "name": "Kaju Katli","category": "Indian", "price": 20, "quantity": 25 },
+    { "name": "Peda","category": "Indian", "price": 9, "quantity": 45 },
+    { "name": "Halwa","category": "Indian", "price": 11, "quantity": 35 },
+    { "name": "Mysore Pak","category": "Indian", "price": 18, "quantity": 20 },
+    { "name": "Sandesh","category": "Indian", "price": 14, "quantity": 28 }
+]
