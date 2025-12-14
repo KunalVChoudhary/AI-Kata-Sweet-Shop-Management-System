@@ -18,12 +18,12 @@ connectDb()
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors())
-// //cors 
-// app.use(cors({
-//   origin: [`${process.env.CLIENT_URL}`],
-//   credentials: true,
-// }));
+
+//cors 
+app.use(cors({
+  origin: [`${process.env.CLIENT_URL}`],
+  credentials: true,
+}));
 
 app.use('/',userRoute,sweetRoute,inventoryRoute)
 
