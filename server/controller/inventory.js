@@ -51,7 +51,7 @@ const purchaseSweet = async (req, res) => {
 const restockSweet = async (req, res) => {
   try {
     const { id } = req.params;
-    const { change } = req.body;
+    const { quantity } = req.body;
 
     const sweet = await Sweet.findById(id);
     if (!sweet) {
@@ -59,7 +59,7 @@ const restockSweet = async (req, res) => {
     }
 
     // increase quantity
-    sweet.quantity = sweet.quantity + change;
+    sweet.quantity = sweet.quantity + quantity;
     await sweet.save();
 
     return res.status(200).json({
