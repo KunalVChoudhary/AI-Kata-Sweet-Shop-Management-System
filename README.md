@@ -63,6 +63,13 @@ The application allows users to browse and purchase sweets, while admin users ca
 
 ---
 
+### Prerequisites
+
+* Node.js v16+ and npm
+* MongoDB instance (local or Atlas)
+
+---
+
 ## 📂 Project Structure
 
 ```
@@ -94,6 +101,9 @@ client/
 
 
 ## Installation
+
+> **Note:** To access admin features (create, update, delete, restock sweets), log in using an email address that ends with `@admin.com`. Any other email will be treated as a normal user.
+
 
 1. Clone the repository:
    ```bash
