@@ -1,0 +1,17 @@
+.loginImage {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;
+  margin: auto;
+  display: block;
+}
+
+
+
+.loadingBackground {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 800;
+}
