@@ -6,8 +6,7 @@ import { useAuth } from "./useAuth";
 //custom hook/function to handle users login/register requests
 export default function useUserLogin(){
     const [loading, setLoading] = useState(false)
-    const {user, setUser} = useAuth()
-    const {role, setRole} = useState('USER')
+    const {user, setUser, role, setRole} = useAuth()
     const navigate = useNavigate();
 
     const loginUser = async (purpose,loginData)=>{
