@@ -141,8 +141,8 @@ export default function Card({cardDetail, setSweetsArray}) {
 
     return(
         <>
-            <div className="card" style={{ width: "18rem" }}>
-                <img src="./app_icon.png" className="card-img-top" alt="..." />
+            <div className={`card ${styles["card"]}`} style={{ width: "18rem" }}>
+                <img src="./app_icon.png" className={`${styles["card-img-top"]}`} alt="..." />
                 <div className="card-body">
                     <h5 className="card-title">{cardDetail.name}</h5>
                     <p className="card-text py-1 m-0">Quanity: {cardDetail.quantity}</p>
