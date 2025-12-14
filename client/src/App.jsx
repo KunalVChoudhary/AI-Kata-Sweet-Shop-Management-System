@@ -1,8 +1,8 @@
 import './App.css'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
+import HomePage from './pages/HomePage/Homepage'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import HomePage from './pages/HomePage/HomePage'
-
+import { useAuth } from './hooks/useAuth'
 
 function App() {
 
